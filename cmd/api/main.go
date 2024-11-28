@@ -1,7 +1,6 @@
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Println("hello world")
+	api := NewApi(":4000")
+	api.Run()
 }
