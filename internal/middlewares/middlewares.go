@@ -22,8 +22,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		err := utils.VerifyToken(tokenString)
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprint(w, "Invalid token")
+			http.Error(w, "Token expired", http.StatusUnauthorized)
 			return
 		}
 
