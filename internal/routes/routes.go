@@ -28,11 +28,13 @@ func NewRouter(db *storage.Sqlite) *chi.Mux {
 		w.Write([]byte("working..."))
 	})
 
-	//subroute
+	//subroutes
 	authRoute := AuthRoutes(h)
+	postRoute := PostRoutes(h)
 
 	//now mounting it to main route
 	r.Mount("/auth", authRoute)
+	r.Mount("/post", postRoute)
 
 	//not found round
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
