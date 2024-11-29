@@ -6,11 +6,13 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/spellsaif/golang-betterme-app/internal/handlers"
+	"github.com/spellsaif/golang-betterme-app/internal/middlewares"
 )
 
 func NewRouter() *chi.Mux {
 	//creates new MUX(Router) for handling our endpoints
 	r := chi.NewRouter()
+	r.Use(middleware.AllowContentType("application/json"))
 
 	//Using logger middleware to log useful information
 	r.Use(middleware.Logger)
@@ -30,7 +32,7 @@ func NewRouter() *chi.Mux {
 	authRoute := chi.NewRouter()
 
 	//subroute routes
-	authRoute.Get("/", handlers.GetUser)
+	authRoute.With(middlewares.AuthMiddleware).Get("/", handlers.GetUser)
 
 	authRoute.Post("/", handlers.CreateUser)
 
